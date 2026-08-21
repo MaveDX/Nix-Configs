@@ -1,0 +1,44 @@
+{
+  "general": {
+    "accentColor": "#ae91e6",
+    "checkForMillenniumUpdates": false,
+    "checkForPluginAndThemeUpdates": false,
+    "injectCSS": true,
+    "injectJavascript": true,
+    "millenniumUpdateChannel": "stable",
+    "onMillenniumUpdate": 0,
+    "shouldShowThemePluginUpdateNotifications": false
+  },
+  "misc": {
+    "hasShownWelcomeModal": true
+  },
+  "network": {
+    "proxy": "",
+    "proxyPassword": "",
+    "proxyUsername": ""
+  },
+  "notifications": {
+    "showNotifications": true,
+    "showPluginNotifications": true,
+    "showUpdateNotifications": false
+  },
+  "plugins": {
+    "enabledPlugins": [
+      "extendium",
+      "steam-easygrid"
+    ]
+  },
+  "themes": {
+    "activeTheme": "ATOMS",
+    "allowedScripts": true,
+    "allowedStyles": true,
+    "conditions": {
+      "ATOMS": {
+        "Dim uninstalled games?": "yes",
+        "Enable Automatic Que Skipping?": "no",
+        "Enable Que Via Keyboard?": "yes",
+        "Use Custom Accent Color?": "yes"
+      }
+    }
+  }
+}

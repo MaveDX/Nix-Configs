@@ -1,0 +1,14 @@
+theme = noctalia
+background-opacity = 0.9
+font-family = "Maple Mono NF"
+font-size = 12
+window-width = 950
+window-height = 500
+scrollback-limit = 5000
+mouse-scroll-multiplier = 3
+window-padding-x = 10
+window-padding-y = 10
+macos-titlebar-style = hidden
+cursor-style = bar
+confirm-close-surface = false
+
