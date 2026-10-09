@@ -11,7 +11,8 @@
       ./hardware-configuration.nix
       ./nixld.nix
       #inputs.spicetify-nix.nixosModules.default
-      inputs.niri-nix.nixosModules.default
+      #inputs.niri-nix.nixosModules.default
+      inputs.umbriel.nixosModules.default
       inputs.noctalia-greeter.nixosModules.default
       #./searx.nix
     ];
@@ -23,7 +24,7 @@
   boot.loader.limine.style = {
     wallpapers = [./peakpx.jpg];
   };
-  
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 1;
 
@@ -51,7 +52,7 @@
       "udev.log_level=3"
       "systemd.show_status=auto"
       "split_lock_detect=off"
-      "clearcpuid=umip" 
+      "clearcpuid=umip"
       "amdgpu.dcdebugmask=0x10"
     ];
     # Hide the OS choice for bootloaders.
@@ -61,7 +62,7 @@
   };
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "ntsync" "uinput" ];
 
   boot.extraModprobeConfig = ''
@@ -120,10 +121,10 @@ xdg.portal = {
       "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
     };
   };
-};    
+};
 
-  
-  services.displayManager.defaultSession = "niri";
+
+  services.displayManager.defaultSession = "umbriel";
   services.dbus.enable = true;
   services.upower.enable = true;
 
@@ -174,6 +175,10 @@ services.pipewire = {
 
   programs = {
 
+  umbriel = {
+     enable = true;
+    };
+
   niri = {
     enable = true;
     package = pkgs.niri-unstable;
@@ -197,7 +202,7 @@ services.pipewire = {
 
   noctalia-greeter = {
     enable = true;
-    greeter-args = "--session niri";
+    greeter-args = "--session umbriel";
   };
 
   nvf = {
@@ -222,9 +227,9 @@ services.pipewire = {
       vim.binds.whichKey.enable = true;
       vim.visuals.cursorline.enable = true;
       vim.ui.fastaction.enable = true;
-      vim.languages.enableTreesitter = true; 
+      vim.languages.enableTreesitter = true;
       vim.treesitter.indent.enable = true;
-      
+
       vim.lsp.enable = true;
 
       vim.languages.nix = {
@@ -251,29 +256,6 @@ services.pipewire = {
 
   };
 
-  stylix = {
-    enable = true;
-    image = ./wallpaper.png;
-    polarity = "dark";
-    override = {
-      base00 = "191919";
-      base01 = "1e1e1e";
-      base02 = "191919";
-      base08 = "1e1e1e";
-
-    };
-
-    targets = {
-
-      qt.enable = false;
-      nvf.enable = false;
-      fish.enable = false;
-      font-packages.enable = false;
-      font-packages.fonts.enable = false;
-
-      };
-  };
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "gb";
@@ -287,7 +269,7 @@ services.pipewire = {
     trusted-users = ["root" "ozgur"];
     substituters = [
       "https://niri-nix.cachix.org"
-      "https://noctalia.cachix.org" 
+      "https://noctalia.cachix.org"
       "https://nyx-cache.chaotic.cx/"
     ];
     trusted-public-keys = [
@@ -317,7 +299,7 @@ home-manager = {
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
- 
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ozgur = {
     shell = pkgs.fish;
@@ -342,7 +324,7 @@ home-manager = {
       "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
   # Install Stuff
-  
+
   environment.systemPackages = with pkgs; [
     fastfetch
     ghostty
@@ -382,7 +364,7 @@ home-manager = {
     kdePackages.filelight
     kdePackages.dolphin
     kdePackages.plasma-workspace
-    kdePackages.qttools 
+    kdePackages.qttools
     kdePackages.ark
     kdePackages.kio-extras
     ffmpegthumbnailer
@@ -410,7 +392,7 @@ home-manager = {
 
 
   ];
- 
+
  fonts.packages = with pkgs; [
   maple-mono.NF
   ibm-plex

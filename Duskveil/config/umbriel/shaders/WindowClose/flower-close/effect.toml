@@ -1,0 +1,4 @@
+[effects.preset.flower-close]
+kind = "animation"
+shader = "shader.glsl"
+palette = true

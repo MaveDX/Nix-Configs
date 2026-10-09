@@ -1,0 +1,442 @@
+# Umbriel default config
+# Copy this file to ~/.config/umbriel/config.toml to customize it.
+# Changes apply on save. See docs/user/ for the full reference.
+#
+# [include] merges extra files into this one. Included files are parsed first,
+# in list order (later files override earlier ones), then everything in this
+# file overrides all of them. That is why Noctalia's dynamic theming can render
+# its palette into a separate noctalia.toml and still let you override the
+# generated colors here.
+
+[include]
+files = [
+    "/home/ozgur/.config/umbriel/shaders/WindowOpen/circle/effect.toml",
+    "/home/ozgur/.config/umbriel/shaders/WindowClose/flower-close/effect.toml",
+    "/home/ozgur/.config/umbriel/shaders/WindowOpen/flower-expand/effect.toml",
+]
+
+[general]
+autostart = ["noctalia", "discord", "steam", "spotify"]
+# mod_key = "Super"            # Mod in keybinds; defaults to Super (Alt when nested)
+xwayland = true                # requires restart to change
+xwayland_native_resolution = true
+show_cheatsheet = false         # show keybinds overlay on startup
+focus_on_activate = false      # activation requests mark urgent without stealing focus
+
+[environment]
+# GTK_THEME = "Adwaita:dark"
+QT_QPA_PLATFORMTHEME = "qt6ct"
+
+[workspaces]
+back_and_forth = false
+
+# Colors ---------------------------------------------------------------------
+
+[colors]
+# background = "#141419F0"
+# text_primary = "#E8E8EAFF"
+# text_muted = "#8A8A92FF"
+# accent_primary = "#7AA3FFFF"
+# accent_secondary = "#F5C96BFF"
+# warning = "#F5C96BFF"
+# error = "#FF6B6BFF"
+
+# Appearance -----------------------------------------------------------------
+
+[appearance]
+prefer_no_csd = true
+border_width = 1               # 0-100
+outer_border_width = 0        # 0-100
+corner_radius = 0             # 0-500
+drag_opacity = 0.5
+
+# border_focused = "#7AA3FFFF"
+# border_unfocused = "#292933FF"
+# scratchpad_border_focused = "#E5C07BFF"
+# scratchpad_border_unfocused = "#5C4A2AFF"
+# outer_border_color = "#1A1A1FFF"
+# insert_hint_color = "#7FC8FF80"
+# backdrop_color = "#000000FF"
+
+[appearance.blur]
+enabled = true
+optimized = false
+passes = 3                     # 0-8
+radius = 3                     # 0-100
+noise = 0.02                   # 0.0-1.0
+brightness = 0.9               # 0.0-2.0
+contrast = 0.9                 # 0.0-2.0
+saturation = 1.1               # 0.0-2.0
+
+[appearance.shadow]
+enabled = true
+softness = 10                  # 0-200, 0 = hard edge
+offset_x = 2                   # -200 to 200
+offset_y = 2
+
+[animation]
+enabled = true
+duration_ms = 250
+curve = "overview"
+
+[animation.windows_in]
+enabled = true
+duration_ms = 500
+effect = "flower-expand"
+curve = "ease-out-quad"
+#style = "zoom"       # "popin", "zoom", "slide", "fade", or "none"
+#scale = 0.85          # 0.1-1.0, used by "popin"
+
+[animation.windows_out]
+enabled = true
+duration_ms = 500
+effect = "flower-close"
+curve = "ease-out-expo"
+#style = "slide"        # "fade" or "slide"
+
+[animation.windows_move]
+enabled = true
+duration_ms = 250
+curve = "overview"
+
+[animation.windows_drag]
+physics = false
+
+[animation.workspaces]
+enabled = true
+duration_ms = 300
+#effect = "sakura-iris"
+curve = "move"
+
+[animation.scratchpad]
+enabled = true
+duration_ms = 250
+curve = "snappy"
+dim = 0.2             # 0.0-1.0
+blur = false          # requires appearance.blur.enabled
+scale = 0.0           # 0 preserves geometry; 0.1-1.0 sizes and centers on entry
+maximize = false      # maximize to edges on entry
+fullscreen = false    # fullscreen on entry
+
+[animation.border]
+enabled = true
+duration_ms = 200
+curve = "move"
+
+[animation.dim_unfocused]
+enabled = true
+duration_ms = 200
+curve = "snappy"
+dim = 0.0             # 0.0-1.0
+
+[animation.overview]
+enabled = true
+duration_ms = 250
+curve = "overview"
+
+[animation.beziers]
+bezier = [0.34, 1.28, 0.64, 1]
+move = [0.25, 1, 0.5, 1.05]
+overview = [0.17, 0.95, 0.52, 0.99]
+
+[animation.springs]
+spring = {damping = 0.8, stiffness = 700}
+
+[effects]
+#border = "pulse"
+
+[effects.preset.drop]
+kind = "animation"
+shader = "shaders/WindowClose/drop/drop.glsl"
+palette = true
+
+[effects.preset.zoom]
+kind = "animation"
+shader = "shaders/WindowOpen/zoom/zoom.glsl"
+palette = true
+
+[effects.preset."water-splash"]
+kind = "animation"
+shader = "shaders/WindowClose/water-splash/shader.glsl"
+palette = true
+
+# Overview -------------------------------------------------------------------
+
+[overview]
+zoom = 0.25                     # 0.1-0.75
+workspace_wallpaper = true
+background_blur = true
+# background_tint = "#10101430"
+# workspace_background = "#00000044" # set alpha to FF for an opaque background
+
+# Hot corners ---------------------------------------------------------------
+
+[hot_corners.top_right]
+enabled = true
+delay_ms = 500                # 0-10000, 0 activates immediately
+action = "overview-open"
+
+[hot_corners.top_left]
+enabled = false
+delay_ms = 500
+action = "overview-close"
+
+[hot_corners.bottom_left]
+enabled = false
+delay_ms = 500
+action = "overview-toggle"
+
+[hot_corners.bottom_right]
+enabled = false
+delay_ms = 500
+action = "spawn:notify-send 'Bottom right'"
+
+# Layout ---------------------------------------------------------------------
+
+[layout]
+mode = "scrolling"             # "scrolling" or "dwindle"
+gap = 16                        # 0-500
+extent_presets = [0.5, 1.0] # shared by scrolling and dwindle
+
+[layout.scrolling]
+default_extent_fraction = 0.5   # 0.1-1.0
+center_underfull_strip = true  # center the strip whenever it is narrower than the viewport
+
+# Workspace layout overrides (see docs/user/outputs.md#workspace-rules)
+# [[workspace]]
+# name = "chat"
+# layout.mode = "dwindle"
+# layout.gap = 4
+# layout.scrolling.center_underfull_strip = false
+
+# Outputs (see docs/user/outputs.md) ----------------------------------------
+
+[output."DP-1"]
+mode = "2560x1440@165"
+position = [0, 0]
+vrr = "fullscreen"            # "disabled" (default), "always", or "fullscreen"
+enabled = true                # false powers the monitor off and removes it from the desktop
+direct_scanout = false
+bit_depth = 10
+# Dynamic workspaces are the default; use a count or name list for static workspaces.
+# workspaces = 5
+
+[output."HDMI-A-2"]
+mode = "1920x1080@60"
+position = [2560, 360]
+direct_scanout = false
+enabled = true
+
+[output.sunshine]
+mode = "1920x1200@120"
+
+# Input ----------------------------------------------------------------------
+
+[input]
+middle_click_paste = false     # primary-selection clipboard, applies on reload
+
+[input.keyboard]
+layout = "gb"                    # "us,de" loads both; switch with keyboard-layout-next
+variant = ""
+options = ""                   # XKB options, e.g. "grp:alt_shift_toggle"
+repeat_rate = 35               # 0-1000 Hz
+repeat_delay = 250             # 0-10000 ms
+
+[input.touchpad]
+# tap = true
+natural_scroll = true
+accel_profile = "flat"
+
+[input.mouse]
+# natural_scroll = false
+accel_profile = "flat"         # "flat", "adaptive", or "custom <step> <points...>"
+sensitivity = 0.0              # pointer speed, -1.0 to 1.0
+scroll_wheel_step = 60         # 1-1000
+# Override only the listed settings for an exact, case-sensitive device name.
+# Applies per device kind: layout, variant, options, repeat_rate, and
+# repeat_delay to keyboards; tap to touchpads; natural_scroll to touchpads
+# and mice; acceleration settings to mice. Find names with `libinput list-devices`.
+# [[input.device]]
+# name = "Acme Precision Touchpad"
+# tap = true
+# natural_scroll = false
+# [[input.device]]
+# name = "Gaming Mouse"
+# accel_profile = "flat"
+# sensitivity = 0.0
+
+[input.tablet]
+enabled = true                 # false disables the tablet and its pads
+# map_to_output = "DP-1"       # confine the tablet area to one monitor
+# map_to_focused_output = false
+# map_to_focused_window = false  # pen area = focused window; wins over the output mappings
+# left_handed = false
+# calibration_matrix = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0]  # libinput calibration, 6 numbers
+
+[input.cursor]
+theme = "Bibata-Modern-Ice"
+size = 24                      # 1-512
+hardware_cursor = true         # false forces software cursor composition
+hide_when_typing = false       # hide after a non-modifier key press
+hide_timeout_ms = 0            # 0-3600000, 0 disables hiding
+follows_focus = true
+
+[input.focus]
+follows_mouse = true
+# Refuse hover focus when revealing the window would scroll further than this,
+# measured in viewport widths (1.0 = one full screen). Omit for no limit.
+follows_mouse_max_scroll = 0
+
+# Keybinds (see docs/user/keybinds.md) --------------------------------------
+
+[keybinds]
+"Mod+Return" = "spawn:ghostty"
+"Mod+E" = "spawn:dolphin"
+"Mod+B" = "spawn:firefox"
+"Mod+G" = "spawn:proton-pass"
+
+"Mod+A" = "window-focus-left"
+"Mod+D" = "window-focus-right"
+"Mod+Shift+A" = "column-move-left"
+"Mod+Shift+D" = "column-move-right"
+"Mod+MouseMiddle" = "layout-scroll-drag"
+
+"Mod" = "overview-toggle"
+"Mod+C" = "window-move-to-output-next"
+"Mod+S" =  "output-focus-next"
+
+"Mod+F" = "window-toggle-maximize"
+"Mod+Shift+F" = "window-toggle-fullscreen"
+
+"Mod+Escape" = "spawn:ghostty -e btop"
+"Mod+Shift+E" = "spawn:ghostty -e yazi"
+
+"Mod+Ctrl+W" = "spawn:noctalia msg panel-toggle wallpaper"
+"Mod+Shift+S" = "spawn:noctalia msg screenshot-region"
+"Mod+I" = "spawn:noctalia msg settings-toggle"
+"Mod+Ctrl+Q" = "spawn:noctalia msg panel-toggle session"
+"Mod+V" = "spawn:zeditor"
+
+"XF86AudioRaiseVolume" = "spawn:noctalia msg volume-up 1%"
+"XF86AudioLowerVolume" = "spawn:noctalia msg volume-down 1%"
+"XF86AudioMute" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+"Mod+Backslash" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+"Mod+M" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+"XF86AudioPlay" = {action = "spawn:playerctl play-pause", repeat = false}
+"XF86AudioNext" = {action = "spawn:playerctl next", repeat = false}
+"XF86AudioPrev" = {action = "spawn:playerctl previous", repeat = false}
+
+"Mod+WheelUp" = "window-focus-left"
+"Mod+WheelDown" = "window-focus-right"
+
+"Mod+T" = "window-toggle-floating"
+"Mod+P" = "window-toggle-pinned"
+"Mod+Q" = "window-close"
+
+"Mod+Space" = "spawn:noctalia msg panel-toggle launcher"
+"Mod+Tab" = "spawn:noctalia msg window-switcher"
+
+# Output, workspace, and window movement actions.
+"Mod+Z" = "workspace-next"
+"Mod+X" = "workspace-previous"
+# "Mod+Minus" = "window-modify-width:-0.1"
+# "Mod+C" = "window-center"
+"Mod+Shift+T" = "workspace-set-layout:toggle"
+
+# Window and layer rules (see docs/user/rules.md) ---------------------------
+[[window_rule]]
+blur = true
+
+[[window_rule]]
+match.app_id = "steam"
+default_output = "HDMI-A-2"
+default_scrolling_extent = 1.0
+
+[[window_rule]]
+match.app_id = "vesktop"
+default_output = "HDMI-A-2"
+default_scrolling_extent = 0.75
+
+[[window_rule]]
+match.app_id = "discord"
+default_output = "HDMI-A-2"
+default_scrolling_extent = 0.75
+
+[[window_rule]]
+match.app_id = "spotify"
+default_output = "HDMI-A-2"
+default_scrolling_extent = 0.75
+
+[[window_rule]]
+match.app_id = "sonora"
+default_output = "HDMI-A-2"
+default_scrolling_extent = 0.75
+
+[[window_rule]]
+match.title = "Obsidian"
+default_floating = true
+default_floating_size_px = { width = 600, height = 500 }
+default_position = { x= 16, y = 5, anchor = "top_left"}
+
+[[window_rule]]
+match.title = "^Friends List$"
+default_floating = true
+default_floating_size_px = { width = 300, height = 700 }
+
+[[window_rule]]
+match.app_id = "^steam$"
+match.title = "[Bb]ig [Pp]icture"
+default_output = "sunshine"
+default_fullscreen = true
+
+[[window_rule]]
+match.app_id = "io.github.Faugus.faugus-launcher"
+default_output = "sunshine"
+
+[[window_rule]]
+match.app_id = "^steam_app_[0-9]+$"
+default_output = "focused"
+
+[[window_rule]]
+match.app_id = "steam_app_default"
+default_output = "focused"
+
+[[window_rule]]
+match.app_id = "steam_proton"
+default_output = "focused"
+
+[[window_rule]]
+match.title = "^notificationtoasts_.+_desktop"
+default_position = { x = 0, y = 0, anchor = "bottom_right" }
+default_focused = false
+default_pinned = true
+
+[[window_rule]]
+match.title = "Picture-in-Picture"
+default_floating = true
+default_floating_size_px = { width = 673, height = 423 }
+default_output = "DP-1"
+opacity = 1.0
+default_position = { x = 12, y = 12, anchor = "top_right" }
+default_focused = false
+default_pinned = true
+
+[[window_rule]]
+match.app_id = "^dev.noctalia.UmbrielSharePicker$"
+default_floating = true
+default_floating_size_px = { width = 800, height = 600 }
+
+[[window_rule]]
+match.is_alone = true
+default_scrolling_extent= 1.0
+
+# Layer rules (see docs/user/rules.md#layer-rules) ---------------------------
+
+[[layer_rule]]
+match.namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+blur = true
+blur_ignore_alpha = 0.5
+blur_optimized = false
+
+[include.optional]
+files = ["noctalia.toml"]

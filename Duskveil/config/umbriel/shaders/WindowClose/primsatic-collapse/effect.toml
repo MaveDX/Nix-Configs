@@ -1,0 +1,4 @@
+[effects.preset.prismatic-collapse]
+kind = "animation"
+shader = "shader.glsl"
+palette = true

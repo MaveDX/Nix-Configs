@@ -1,0 +1,4 @@
+[effects.preset.petal-drift]
+kind = "animation"
+shader = "shader.glsl"
+palette = true

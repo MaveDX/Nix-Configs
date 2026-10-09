@@ -1,0 +1,4 @@
+[effects.preset.sakura-iris]
+kind = "animation"
+shader = "shader.glsl"
+palette = true

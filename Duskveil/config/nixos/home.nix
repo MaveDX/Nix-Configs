@@ -6,7 +6,7 @@
   home.username = "ozgur";
   home.homeDirectory = "/home/ozgur";
 
-  imports = [ 
+  imports = [
     inputs.nixcord.homeModules.nixcord
     inputs.niri-scrollbar.homeManagerModules.default
     inputs.spicetify-nix.homeManagerModules.spicetify
@@ -38,23 +38,53 @@ in
     fullAlbumDate
     volumePercentage
     aiBandBlocker
+
+    ({
+      src = pkgs.fetchFromGitHub {
+        owner = "MaveDX";
+        repo = "Spicetify-Sidebar-Lyrics";
+        rev = "0b7e9289fb19b9d1e26f3bf0be9b8fd08561f76d";
+        hash = "sha256-Ba4zjAenPDNlcED4a0PrMn7ON5dkMHNLXJDjiciKJ3s=";
+      };
+      # The actual file name of the extension usually ends with .js
+      name = "sidebar-lyrics.js";
+    })
+
   ];
 
   enabledCustomApps = with spicePkgs.apps; [
-    
+
   ];
   enabledSnippets = with spicePkgs.snippets; [
     pointer
     prettyLyrics
     removeUnusedSpace
-    removeTheArtistsAndCreditsSectionsFromTheSidebar
+    #removeTheArtistsAndCreditsSectionsFromTheSidebar
     beSquare
     removeGradient
+    ''#Desktop_PanelContainer_Id, .NowPlayingView, [aria-label="Now playing view"], :has(#Desktop_PanelContainer_Id), #Desktop_PanelContainer_Id * { border-radius: 0 !important; --section-border-radius: 0px !important; --px-border-radius: 0px !important; }''
   ];
 
-      #theme = spicePkgs.themes.sleek;
-      #colorScheme = "Elementary";
-  wayland = true;
+    theme = spicePkgs.themes.sleek;
+    customColorScheme = {
+      text               = "ffffff";
+      subtext            = "ffffff";
+      main               = "24202c";
+      highlight          = "ffffff";
+      misc               = "6f5e97";
+      notification       = "d8b4ff";
+      notification-error = "ff6f9b";
+      shadow             = "1d1c21";
+      card               = "2e2938";
+      player             = "24202c";
+      sidebar            = "1d1c21";
+      main-elevated      = "373144";
+      selected-row       = "ffffff";
+      button             = "b58fff";
+      button-active      = "b58fff";
+      button-disabled    = "6f5e97";
+    };
+    wayland = true;
 };
 
    programs.zen-browser = {
@@ -62,11 +92,6 @@ in
     setAsDefaultBrowser = true;
   };
 
-  stylix.targets.zen-browser.enable = false;
-  stylix.targets.firefox.fonts.enable = false;
-  stylix.targets.firefox.enable = false;
-
-  services.niriScrollbar.enable = true;
 
 
   home.packages = [
@@ -93,10 +118,10 @@ in
 # };
 
   home.pointerCursor = {
-    gtk.enable = true;                     
+    gtk.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Ice";
-    size = 24;                             
+    size = 24;
   };
 
   gtk = {
@@ -131,7 +156,7 @@ in
       fakeNitro.enable = true;
       volumeBooster.enable = true;
       webScreenShareFixes.enable = true;
-      
+
     };
   };
     discord.commandLineArgs = [

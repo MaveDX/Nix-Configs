@@ -1,0 +1,4 @@
+[effects.preset.prismatic-rift]
+kind = "animation"
+shader = "shader.glsl"
+palette = true

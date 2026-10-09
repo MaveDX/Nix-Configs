@@ -4,15 +4,20 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    
+
     mangowm = {
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
 
     noctalia = {
       url = "github:noctalia-dev/noctalia";
+    };
+
+    umbriel = {
+      url = "git+https://github.com/noctalia-dev/umbriel";
+      #inputs.nixpkgs.follows = "nixpkgs";
     };
 
     noctalia-greeter = {
@@ -43,7 +48,7 @@
 
 
     nixcord.url = "github:FlameFlag/nixcord";
-    
+
 
     zen-browser = {
     url = "github:0xc000022070/zen-browser-flake";
@@ -54,17 +59,14 @@
 
   };
 
-    niri-scrollbar.url = "github:MaveDX/Niri-Scrollbar"; 
+    niri-scrollbar.url = "github:MaveDX/Niri-Scrollbar";
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
-  
+
+
   };
 
-  outputs = { self, nixpkgs, nvf, nix-index-database, mangowm, stylix, chaotic, ... }@inputs: {
+  outputs = { self, nixpkgs, nvf, nix-index-database, umbriel, ... }@inputs: {
     # use "nixos", or your hostname as the name of the configuration
     # it's a better practice than "default" shown in the video
     nixosConfigurations.Duskveil = nixpkgs.lib.nixosSystem {
@@ -75,7 +77,7 @@
           nixpkgs.overlays = [
             inputs.millennium.overlays.default
             inputs.niri-nix.overlays.niri-nix
-            
+
           ];
         }
 
@@ -86,7 +88,7 @@
         mangowm.nixosModules.mango
         stylix.nixosModules.stylix
         chaotic.nixosModules.default
-      
+
       ];
     };
   };
