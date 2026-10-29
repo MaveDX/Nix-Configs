@@ -15,6 +15,7 @@
       inputs.umbriel.nixosModules.default
       inputs.noctalia-greeter.nixosModules.default
       #./searx.nix
+	   ./music-stack.nix
     ];
 
   system.nixos.distroName = "Mave Linux";
