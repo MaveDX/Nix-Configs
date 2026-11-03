@@ -16,7 +16,7 @@ files = [
 ]
 
 [general]
-autostart = ["noctalia", "discord", "steam", "spotify"]
+autostart = ["noctalia", "discord", "steam", "sonora"]
 # mod_key = "Super"            # Mod in keybinds; defaults to Super (Alt when nested)
 xwayland = true                # requires restart to change
 xwayland_native_resolution = true
@@ -41,6 +41,11 @@ back_and_forth = false
 # warning = "#F5C96BFF"
 # error = "#FF6B6BFF"
 
+[colors.overview]
+background_tint = "#00000000"
+workspace_background = "#00000033"
+#badge = "#7AA3FFFF"
+
 # Appearance -----------------------------------------------------------------
 
 [appearance]
@@ -61,18 +66,26 @@ drag_opacity = 0.5
 [appearance.blur]
 enabled = true
 optimized = false
-passes = 3                     # 0-8
-radius = 3                     # 0-100
+passes = 4                     # 0-8
+radius = 10                     # 0-100
 noise = 0.02                   # 0.0-1.0
 brightness = 0.9               # 0.0-2.0
-contrast = 0.9                 # 0.0-2.0
-saturation = 1.1               # 0.0-2.0
+contrast = 1.2                 # 0.0-2.0
+saturation = 1.9               # 0.0-2.0
 
 [appearance.shadow]
 enabled = true
 softness = 10                  # 0-200, 0 = hard edge
 offset_x = 2                   # -200 to 200
 offset_y = 2
+
+[appearance.title_bar]
+mode = "negotiated"
+height = 28
+font = "sans 10"
+button_position = "right"
+buttons = ["minimize", "maximize", "close"]
+button_corner_radius = 50
 
 [animation]
 enabled = true
@@ -99,6 +112,11 @@ enabled = true
 duration_ms = 250
 curve = "overview"
 
+[animation.windows_resize]
+enabled = true
+curve = "overview"
+
+
 [animation.windows_drag]
 physics = false
 
@@ -107,16 +125,6 @@ enabled = true
 duration_ms = 300
 #effect = "sakura-iris"
 curve = "move"
-
-[animation.scratchpad]
-enabled = true
-duration_ms = 250
-curve = "snappy"
-dim = 0.2             # 0.0-1.0
-blur = false          # requires appearance.blur.enabled
-scale = 0.0           # 0 preserves geometry; 0.1-1.0 sizes and centers on entry
-maximize = false      # maximize to edges on entry
-fullscreen = false    # fullscreen on entry
 
 [animation.border]
 enabled = true
@@ -164,8 +172,8 @@ palette = true
 
 [overview]
 zoom = 0.25                     # 0.1-0.75
-workspace_wallpaper = true
-background_blur = true
+workspace_wallpaper = false
+background_blur = false
 # background_tint = "#10101430"
 # workspace_background = "#00000044" # set alpha to FF for an opaque background
 
@@ -189,7 +197,7 @@ action = "overview-toggle"
 [hot_corners.bottom_right]
 enabled = false
 delay_ms = 500
-action = "spawn:notify-send 'Bottom right'"
+action = "spawn notify-send 'Bottom right'"
 
 # Layout ---------------------------------------------------------------------
 
@@ -201,6 +209,9 @@ extent_presets = [0.5, 1.0] # shared by scrolling and dwindle
 [layout.scrolling]
 default_extent_fraction = 0.5   # 0.1-1.0
 center_underfull_strip = true  # center the strip whenever it is narrower than the viewport
+
+[layout.stacking]
+drop_zones = true
 
 # Workspace layout overrides (see docs/user/outputs.md#workspace-rules)
 # [[workspace]]
@@ -225,6 +236,7 @@ bit_depth = 10
 mode = "1920x1080@60"
 position = [2560, 360]
 direct_scanout = false
+bit_depth = 10
 enabled = true
 
 [output.sunshine]
@@ -234,6 +246,7 @@ mode = "1920x1200@120"
 
 [input]
 middle_click_paste = false     # primary-selection clipboard, applies on reload
+client_window_drag = true
 
 [input.keyboard]
 layout = "gb"                    # "us,de" loads both; switch with keyboard-layout-next
@@ -290,10 +303,11 @@ follows_mouse_max_scroll = 0
 # Keybinds (see docs/user/keybinds.md) --------------------------------------
 
 [keybinds]
-"Mod+Return" = "spawn:ghostty"
-"Mod+E" = "spawn:dolphin"
-"Mod+B" = "spawn:firefox"
-"Mod+G" = "spawn:proton-pass"
+"Mod+Return" = "spawn ghostty"
+"Mod+E" = "spawn strata"
+"Mod+B" = "spawn firefox"
+"Mod+P" = "spawn firefox --private-window"
+"Mod+G" = "spawn noctalia msg panel-toggle tadomika_ari/config-swap:panel"
 
 "Mod+A" = "window-focus-left"
 "Mod+D" = "window-focus-right"
@@ -308,40 +322,40 @@ follows_mouse_max_scroll = 0
 "Mod+F" = "window-toggle-maximize"
 "Mod+Shift+F" = "window-toggle-fullscreen"
 
-"Mod+Escape" = "spawn:ghostty -e btop"
-"Mod+Shift+E" = "spawn:ghostty -e yazi"
+"Mod+Escape" = "spawn ghostty -e btop"
+"Mod+Shift+E" = "spawn ghostty -e yazi"
 
-"Mod+Ctrl+W" = "spawn:noctalia msg panel-toggle wallpaper"
-"Mod+Shift+S" = "spawn:noctalia msg screenshot-region"
-"Mod+I" = "spawn:noctalia msg settings-toggle"
-"Mod+Ctrl+Q" = "spawn:noctalia msg panel-toggle session"
-"Mod+V" = "spawn:zeditor"
+"Mod+Ctrl+W" = "spawn noctalia msg panel-toggle wallpaper"
+"Mod+Shift+S" = "spawn noctalia msg screenshot-region"
+"Mod+I" = "spawn noctalia msg settings-toggle"
+"Mod+Ctrl+Q" = "spawn noctalia msg panel-toggle session"
+"Mod+V" = "spawn zeditor"
 
-"XF86AudioRaiseVolume" = "spawn:noctalia msg volume-up 1%"
-"XF86AudioLowerVolume" = "spawn:noctalia msg volume-down 1%"
-"XF86AudioMute" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-"Mod+Backslash" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-"Mod+M" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-"XF86AudioPlay" = {action = "spawn:playerctl play-pause", repeat = false}
-"XF86AudioNext" = {action = "spawn:playerctl next", repeat = false}
-"XF86AudioPrev" = {action = "spawn:playerctl previous", repeat = false}
+"XF86AudioRaiseVolume" = "spawn noctalia msg volume-up 1%"
+"XF86AudioLowerVolume" = "spawn noctalia msg volume-down 1%"
+"XF86AudioMute" = "spawn wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+"Mod+Backslash" = "spawn wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+"Mod+M" = "spawn wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+"XF86AudioPlay" = {action = "spawn playerctl play-pause", repeat = false}
+"XF86AudioNext" = {action = "spawn playerctl next", repeat = false}
+"XF86AudioPrev" = {action = "spawn playerctl previous", repeat = false}
 
 "Mod+WheelUp" = "window-focus-left"
 "Mod+WheelDown" = "window-focus-right"
 
 "Mod+T" = "window-toggle-floating"
-"Mod+P" = "window-toggle-pinned"
 "Mod+Q" = "window-close"
 
-"Mod+Space" = "spawn:noctalia msg panel-toggle launcher"
-"Mod+Tab" = "spawn:noctalia msg window-switcher"
+"Mod+Space" = "spawn noctalia msg panel-toggle launcher"
+"Mod+Tab" = "spawn noctalia msg window-switcher"
 
 # Output, workspace, and window movement actions.
 "Mod+Z" = "workspace-next"
 "Mod+X" = "workspace-previous"
 # "Mod+Minus" = "window-modify-width:-0.1"
 # "Mod+C" = "window-center"
-"Mod+Shift+T" = "workspace-set-layout:toggle"
+"Mod+Shift+T" = "workspace-set-layout toggle"
+"Mod+Alt+C" = "workspace-toggle-show-desktop"
 
 # Window and layer rules (see docs/user/rules.md) ---------------------------
 [[window_rule]]
@@ -360,7 +374,12 @@ default_scrolling_extent = 0.75
 [[window_rule]]
 match.app_id = "discord"
 default_output = "HDMI-A-2"
-default_scrolling_extent = 0.75
+default_scrolling_extent = 0.7387
+
+[[window_rule]]
+match.app_id = "cressida"
+default_output = "HDMI-A-2"
+default_scrolling_extent = 0.738
 
 [[window_rule]]
 match.app_id = "spotify"
@@ -370,7 +389,7 @@ default_scrolling_extent = 0.75
 [[window_rule]]
 match.app_id = "sonora"
 default_output = "HDMI-A-2"
-default_scrolling_extent = 0.75
+default_scrolling_extent = 0.25
 
 [[window_rule]]
 match.title = "Obsidian"
