@@ -1,3 +1,3 @@
-function hedit --wraps='sudo nvim /etc/nixos/home.nix' --description 'alias hedit=sudo nvim /etc/nixos/home.nix'
-    sudo nvim /etc/nixos/home.nix $argv
+function hedit --wraps='zeditor ~/.config/nixos/home.nix' --description 'alias hedit=zeditor ~/.config/nixos/home.nix'
+    zeditor ~/.config/nixos/home.nix $argv
 end

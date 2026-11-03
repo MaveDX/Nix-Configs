@@ -1,3 +1,3 @@
-function nedit --wraps='sudo nvim /etc/nixos/configuration.nix' --description 'alias nedit=sudo nvim /etc/nixos/configuration.nix'
-    sudo nvim /etc/nixos/configuration.nix $argv
+function nedit --wraps='zeditor ~/.config/nixos/configuration.nix' --description 'alias nedit=zeditor ~/.config/nixos/configuration.nix'
+    zeditor ~/.config/nixos/configuration.nix $argv
 end
