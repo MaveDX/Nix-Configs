@@ -3,39 +3,99 @@ high_contrast = false
 ui_scale = 1.0
 
 [audio]
+enable_notification_sounds = true
 enable_overdrive = false
+enable_power_sounds = true
+enable_screenshot_sounds = true
 enable_sounds = false
-notification_sound = ""
+enable_volume_sounds = true
+sound_theme = "freedesktop"
 sound_volume = 0.5
-volume_change_sound = ""
+spectrum_frame_rate = 60
 
 [backdrop]
-blur_intensity = 0.5
+blur_intensity = 0.31000000238418579
 enabled = false
-tint_intensity = 0.30000001192092896
+tint_intensity = 0.0
 
 [bar]
-order = [ "default" ]
+order = [ "default", "Lower_Bar" ]
 
-    [bar.default]
+    [bar.Lower_Bar]
     auto_hide = false
-    background_opacity = 0.94999998807907104
-    border = "outline"
+    auto_hide_delay_ms = 0
+    auto_hide_reserve_space = false
+    background_opacity = 0.75999999046325684
+    border = "outline_variant"
     border_width = 0.0
     capsule = false
-    capsule_fill = "surface_variant"
+    capsule_border_width = 1.0
+    capsule_fill = "surface_container"
+    capsule_group = []
     capsule_opacity = 1.0
     capsule_padding = 6.0
     capsule_thickness = 0.75999999046325684
     center = []
-    concave_edge_corners = true
+    compositor_blur = true
+    concave_edge_corners = false
     contact_shadow = false
-    enabled = true
-    end = [ "media", "group:g1", "volume", "input_volume", "session" ]
+    enabled = false
+    end = []
+    font_family = "Maple Mono NF"
+    font_scale = 1.0
     font_weight = 500
     hover_highlight = false
     layer = "top"
-    margin_edge = 11
+    margin_edge = 0
+    margin_ends = 0
+    margin_opposite_edge = 0
+    padding = 14
+    panel_overlap = 1
+    position = "bottom"
+    radius = 0
+    radius_bottom_left = 0
+    radius_bottom_right = 0
+    radius_top_left = 0
+    radius_top_right = 0
+    reserve_space = true
+    scale = 1.25
+    shadow = true
+    show_on_workspace_switch = true
+    show_tooltip = true
+    smart_auto_hide = false
+    start = [ "launcher", "taskbar" ]
+    thickness = 35
+    widget_spacing = 11
+
+        [bar.Lower_Bar.dead_zone]
+        click_through = false
+
+    [bar.default]
+    auto_hide = false
+    auto_hide_delay_ms = 0
+    auto_hide_reserve_space = false
+    background_opacity = 0.84999996423721313
+    border = "outline_variant"
+    border_width = 0.0
+    capsule = false
+    capsule_border_width = 1.0
+    capsule_fill = "surface_container"
+    capsule_opacity = 1.0
+    capsule_padding = 6.0
+    capsule_radius = 0.0
+    capsule_thickness = 0.75999999046325684
+    center = []
+    compositor_blur = true
+    concave_edge_corners = true
+    contact_shadow = false
+    enabled = true
+    end = [ "media", "slash", "group:g1", "slash", "volume", "input_volume", "slash", "launcher" ]
+    font_family = "Maple Mono NF"
+    font_scale = 1.0
+    font_weight = 500
+    hover_highlight = false
+    layer = "top"
+    margin_edge = 10
     margin_ends = 15
     margin_opposite_edge = 0
     padding = 10
@@ -50,21 +110,39 @@ order = [ "default" ]
     scale = 1.0
     shadow = true
     show_on_workspace_switch = true
+    show_tooltip = true
     smart_auto_hide = false
-    start = [ "clock", "date", "weather", "toggle", "Notes", "bluetooth", "clipboard", "tray", "workspaces" ]
+    start = [
+        "clock",
+        "date",
+        "weather",
+        "slash",
+        "toggle",
+        "slash",
+        "notes_2",
+        "bluetooth",
+        "clipboard",
+        "tray",
+        "slash",
+        "workspaces"
+    ]
     thickness = 35
     widget_spacing = 15
 
-        [bar.default.dead_zone.actions]
-        middle = "exec noctalia msg panel-toggle launcher"
-        scroll_down = "exec niri msg action focus-workspace-down"
-        scroll_up = "exec niri msg action focus-workspace-up"
+        [bar.default.dead_zone]
+        click_through = false
+
+            [bar.default.dead_zone.actions]
+            middle = "exec noctalia msg panel-toggle launcher"
+            scroll_down = "exec umbriel msg workspace-next"
+            scroll_up = "exec umbriel msg workspace-previous"
 
         [[bar.default.capsule_group]]
-        accordion = false
+        accordion = true
         accordion_direction = "end"
+        border_width = 1.0
         enabled = true
-        fill = "surface_variant"
+        fill = "surface_container"
         id = "g1"
         members = [ "cpu", "CPU_Temp", "ram", "RootSpace", "SataSSD", "NVME" ]
         opacity = 0.0
@@ -73,6 +151,10 @@ order = [ "default" ]
 [battery]
 warning_threshold = 10
 
+[bluetooth]
+connect_when_enabled = false
+connection_notifications = false
+
 [brightness]
 enable_ddcutil = false
 ignore_mmids = []
@@ -80,11 +162,23 @@ minimum_brightness = 0.0
 sync_all_monitors = false
 
 [calendar]
+dedupe_events = false
+dedupe_ignore_patterns = []
 enabled = false
+event_date_format = "%A %e %B"
+event_time_format = "%H:%M"
 refresh_minutes = 15
 
+    [calendar.reminders]
+    all_day_digest_time = "09:00"
+    default_lead_minutes = 10
+    enabled = true
+    use_event_reminders = true
+
 [control_center]
-hidden_tabs = []
+circular_avatar = true
+hidden_tabs = [ "monitor", "screen-time" ]
+show_avatar_border = true
 show_session_button = true
 show_shortcut_labels = true
 sidebar = "compact"
@@ -92,92 +186,105 @@ sidebar_section = "compact"
 width = 700
 
     [control_center.calendar]
-    event_date_format = "%A %e %B"
-    event_time_format = "%H:%M"
+    hide_past_events = false
+    past_events_threshold_minutes = 30
     show_events_card = true
+    show_events_location = false
     show_week_numbers = false
+
+    [control_center.media]
+    show_visualizer = true
+
+    [[control_center.shortcuts]]
+    type = "system"
+
+    [[control_center.shortcuts]]
+    type = "weather"
+
+    [[control_center.shortcuts]]
+    type = "noctalia/wallhaven:shortcut"
+
+    [[control_center.shortcuts]]
+    type = "wallpaper"
 
     [[control_center.shortcuts]]
     type = "wifi"
 
-    [[control_center.shortcuts]]
-    type = "bluetooth"
-
-    [[control_center.shortcuts]]
-    type = "caffeine"
-
-    [[control_center.shortcuts]]
-    type = "nightlight"
-
-    [[control_center.shortcuts]]
-    type = "notification"
-
-    [[control_center.shortcuts]]
-    type = "power_profile"
-
 [desktop_widgets]
-enabled = false
+enabled = true
 schema_version = 1
-widget_order = [ "desktop-widget-0000000000000001" ]
+widget_order = [ "desktop-widget-0000000000000002" ]
 
     [desktop_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
 
-    [desktop_widgets.widget.desktop-widget-0000000000000001]
+    [desktop_widgets.widget.desktop-widget-0000000000000002]
     box_height = 0.0
     box_width = 0.0
-    cx = 2336.0
-    cy = 230.0
-    enabled = true
+    cx = 116.33332824707031
+    cy = 1324.0
+    enabled = false
     output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 2560.0
     rotation = 0.0
-    type = "fancy_audio_visualizer"
+    type = "sticker"
 
-        [desktop_widgets.widget.desktop-widget-0000000000000001.settings]
+        [desktop_widgets.widget.desktop-widget-0000000000000002.settings]
         background = false
-        visualization_mode = "bars_rings"
+        image_path = "/home/ozgur/Pictures/ffFull/smallrice.png"
+        opacity = 1.0
 
 [dock]
 active_monitor_only = false
 active_opacity = 1.0
 active_scale = 1.0
 auto_hide = false
-background_opacity = 0.87999999523162842
-border = "outline"
+background_opacity = 0.84999996423721313
+border = "surface"
 border_width = 0.0
-concave_edge_corners = true
+compositor_blur = true
+concave_edge_corners = false
 cross_axis_padding = 8
-enabled = false
-icon_size = 48
+enabled = true
+icon_size = 30
 inactive_opacity = 0.85000002384185791
 inactive_scale = 0.85000002384185791
 item_spacing = 6
 launcher_custom_image = ""
 launcher_custom_image_colorize = false
 launcher_icon = "grid-dots"
-launcher_position = "none"
+launcher_position = "start"
 layer = "top"
 magnification = true
 magnification_scale = 1.4500000476837158
-main_axis_padding = 16
+main_axis_padding = 10
 margin_edge = 0
 margin_ends = 0
-monitors = []
-pinned = []
+pinned = [
+    "com.mitchellh.ghostty",
+    "firefox",
+    "io.github.lgse.Strata",
+    "steam",
+    "cressida",
+    "sonora",
+    "io.github.Faugus.faugus-launcher",
+    "dev.zed.Zed"
+]
 position = "bottom"
-radius = 16
-radius_bottom_left = 16
-radius_bottom_right = 16
-radius_top_left = 16
-radius_top_right = 16
-reserve_space = true
+radius = 0
+radius_bottom_left = 0
+radius_bottom_right = 0
+radius_top_left = 0
+radius_top_right = 0
+reserve_space = false
 shadow = true
 show_dots = false
 show_instance_count = true
 show_running = true
-smart_auto_hide = false
+smart_auto_hide = true
 
 [hooks]
 battery_charging = []
@@ -187,7 +294,7 @@ battery_plugged = []
 bluetooth_disabled = []
 bluetooth_enabled = []
 colors_changed = []
-logging_out = []
+logging_out = [ "pkill -9 Discord" ]
 power_profile_changed = []
 rebooting = []
 session_locked = []
@@ -195,7 +302,7 @@ session_unlocked = []
 shutting_down = []
 started = []
 theme_mode_changed = []
-wallpaper_changed = [ "/home/ozgur/.config/scripts/on-wallpaper-change.sh" ]
+wallpaper_changed = []
 wifi_disabled = []
 wifi_enabled = []
 
@@ -261,8 +368,8 @@ up = [ "Up" ]
 validate = [ "Return", "KP_Enter", "space" ]
 
 [location]
-address = "London, England"
-auto_locate = true
+address = "Enfield, UK"
+auto_locate = false
 custom_schedule = false
 latitude = 51.654826999999997
 longitude = -0.081936999999999996
@@ -273,17 +380,22 @@ sunset = ""
 allow_empty_password = false
 blur_intensity = 0.5
 blurred_desktop = false
+edge_smoothness = 0.30000001192092896
 enabled = true
 fingerprint = true
+grace_period_seconds = 0
 lock_before_suspend = true
 monitors = []
 tint_intensity = 0.30000001192092896
+transition = [ "fade", "wipe", "disc", "stripes", "zoom", "honeycomb" ]
+transition_duration = 1500.0
 wallpaper = ""
 
 [lockscreen_widgets]
 enabled = false
 schema_version = 1
 widget_order = [
+    "lockscreen-login-box@sunshine",
     "lockscreen-login-box@winit",
     "lockscreen-login-box@WL-1",
     "lockscreen-login-box@HDMI-A-2",
@@ -303,6 +415,8 @@ widget_order = [
     cy = 1317.0
     enabled = true
     output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 2560.0
     rotation = 0.0
     type = "login_box"
 
@@ -324,6 +438,8 @@ widget_order = [
     cy = 957.0
     enabled = true
     output = "HDMI-A-1"
+    placement_height = 0.0
+    placement_width = 0.0
     rotation = 0.0
     type = "login_box"
 
@@ -345,6 +461,8 @@ widget_order = [
     cy = 957.0
     enabled = true
     output = "HDMI-A-2"
+    placement_height = 1080.0
+    placement_width = 1920.0
     rotation = 0.0
     type = "login_box"
 
@@ -362,15 +480,45 @@ widget_order = [
     [lockscreen_widgets.widget."lockscreen-login-box@WL-1"]
     box_height = 196.0
     box_width = 720.0
-    cx = 628.0
-    cy = 1243.0
+    cx = 626.99993896484375
+    cy = 1241.1746826171875
     enabled = true
     output = "WL-1"
+    placement_height = 1360.0
+    placement_width = 1254.0
     rotation = 0.0
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@WL-1".settings]
-        background_color = "surface_variant"
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@sunshine"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 896.6666259765625
+    enabled = true
+    output = "sunshine"
+    placement_height = 1200.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@sunshine".settings]
+        background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
         center_password_text = false
@@ -392,11 +540,13 @@ widget_order = [
     cy = 1190.0
     enabled = true
     output = "winit"
+    placement_height = 0.0
+    placement_width = 0.0
     rotation = 0.0
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@winit".settings]
-        background_color = "surface_variant"
+        background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
         center_password_text = false
@@ -420,9 +570,13 @@ temperature_night = 4000
 [notification]
 background_opacity = 0.97000002861022949
 border = true
+border_color = "outline_variant"
+border_width = 1.0
 collapse_on_dismiss = true
 enable_daemon = true
-history_retention_hours = 0
+follow_focused_output = false
+history_retention_hours = 1
+keep_dismissed_in_history = true
 layer = "top"
 max_visible = 0
 monitors = []
@@ -432,28 +586,35 @@ position = "top_right"
 scale = 1.0
 show_actions = true
 show_app_name = true
+width = 360
 
 [osd]
 background_opacity = 0.97000002861022949
 border = true
+border_color = "outline_variant"
+border_width = 1.0
 enabled = true
+follow_focused_output = false
+hide_delay_ms = 1400
 monitors = []
-offset_x = 20
+offset_x = 15
 offset_y = 8
-orientation = "horizontal"
+orientation = "vertical"
 position = "top_center"
-position_vertical = "top_center"
+position_vertical = "top_right"
 scale = 1.0
 
     [osd.kinds]
     bluetooth = true
     brightness = true
     caffeine = true
+    custom = true
     dnd = true
     keyboard_backlight = true
     keyboard_layout = true
     lock_keys = true
     media = false
+    media_volume = true
     nightlight = true
     power_profile = true
     privacy = true
@@ -473,14 +634,30 @@ panel_open_near_click = true
 panel_placement = "attached"
 panel_position = "auto"
 
+[plugin_settings."notoxus/media-island"]
+auto_show = false
+
 [plugin_settings."ozgur/anilist"]
 client_id = "46797"
 client_secret = "G8BtOj93gIda4gywlSjDxbIOOIF8MXBMr1VZQfPY"
 library_placement = "attached"
 
+[plugin_settings."weinguyen/procmon"]
+panel_placement = "attached"
+sort_by = "mem"
+
 [plugins]
-auto_update = true
-enabled = [ "ozgur/vpn-toggle", "davemhammer/obsidian", "tadomika_ari/w-engine" ]
+auto_update = "all"
+enabled = [
+    "ozgur/vpn-toggle",
+    "noctalia/wallhaven",
+    "azokyen/spotify-media",
+    "noctalia/notes",
+    "lucasoe/proton-pass",
+    "tordex/processes",
+    "andrewdems/printers",
+    "tadomika_ari/w-engine"
+]
 
     [[plugins.source]]
     enabled = true
@@ -513,7 +690,7 @@ enabled = [ "ozgur/vpn-toggle", "davemhammer/obsidian", "tadomika_ari/w-engine" 
     name = "niricolumns"
 
 [shell]
-app_icon_color = "primary"
+app_icon_color = "secondary"
 app_icon_colorize = false
 avatar_path = ""
 button_borders = true
@@ -528,10 +705,11 @@ corner_radius_scale = 0.0
 date_format = "%A, %x"
 disable_mipmaps = false
 external_ip_enabled = false
-font_family = "JetBrains Mono"
+font_family = "Maple Mono NF"
 input_borders = true
 launch_apps_as_systemd_services = false
 launch_apps_custom_command = ""
+niri_overview_close_on_launch_enabled = false
 niri_overview_type_to_launch_enabled = false
 offline_mode = false
 panel_anchor_bar = "default"
@@ -539,21 +717,27 @@ password_style = "default"
 polkit_agent = true
 popup_borders = true
 popup_shadows = true
+readline_shortcuts = false
 screen_time_enabled = false
+settings_expand_all_groups = true
 settings_show_advanced = true
 settings_window_translucent = false
 setup_wizard_enabled = true
 shared_gl_context = true
+show_close_buttons = true
 show_location = true
 telemetry_enabled = false
 time_format = "{:%H:%M}"
+umbriel_audio_provider_enabled = false
+umbriel_overview_close_on_launch_enabled = true
+umbriel_overview_type_to_launch_enabled = true
 
     [shell.animation]
     enabled = true
     speed = 1.0
 
     [shell.greeter_sync]
-    auto_sync = false
+    auto_sync = true
 
     [shell.keyboard_layout]
 
@@ -561,19 +745,36 @@ time_format = "{:%H:%M}"
     app_grid = false
     auto_paste = "auto"
     categories = false
-    compact = false
+    category_icons_only = false
+    compact = true
+    default_view = "recent"
     fetch_exchange_rates = true
+    ignore_mouse = false
+    layout = "full"
     pinned = []
     provider_prefix = "/"
+    search_position = "bottom"
+    show_app_actions = false
+    show_app_origin_indicator = true
     show_icons = true
+    show_navigation_labels = true
+    show_session_button = true
+    show_settings_button = true
     sort_by_usage = true
+    track_usage = true
+    width = 600
 
         [shell.launcher.dmenu]
+
+        [shell.launcher.panels]
+        ignored = [ "polkit", "setup-wizard", "test", "launcher" ]
 
     [shell.mpris]
     blacklist = []
 
     [shell.panel]
+    border_color = "outline_variant"
+    border_width = 1.0
     borders = true
     clipboard_placement = "attached"
     clipboard_position = "center"
@@ -597,6 +798,7 @@ time_format = "{:%H:%M}"
     transparency_mode = "solid"
     wallpaper_placement = "attached"
     wallpaper_position = "auto"
+    wallpaper_show_names = true
 
     [shell.privacy]
     cam_filter_regex = ""
@@ -608,16 +810,28 @@ time_format = "{:%H:%M}"
     size = 32
 
     [shell.screenshot]
-    confirm_region = false
+    annotate = false
+    close_on_copy = true
+    close_on_save = true
+    confirm_region = true
+    copy_on_close = false
     copy_to_clipboard = true
-    directory = ""
+    directory = "/home/ozgur/Pictures/Screenshots"
     filename_pattern = ""
+    format = "png"
     freeze_screen = true
     pipe_command = ""
     pipe_to_command = false
+    quality = 90
+    region_border_width = 2.0
+    region_dim_opacity = 0.64999997615814209
+    region_modifier = "none"
     remember_last_region = false
     save_to_file = true
     show_cursor = false
+    show_region_dimensions = true
+    show_region_hint = true
+    skip_annotate_on_copy_save = false
 
     [shell.session]
     grid = false
@@ -633,6 +847,7 @@ time_format = "{:%H:%M}"
         enabled = false
         glyph = ""
         label = ""
+        lockscreen_shortcut = ""
         shortcut = "1"
         variant = "default"
 
@@ -643,6 +858,7 @@ time_format = "{:%H:%M}"
         enabled = true
         glyph = ""
         label = ""
+        lockscreen_shortcut = ""
         shortcut = "1"
         variant = "default"
 
@@ -653,6 +869,7 @@ time_format = "{:%H:%M}"
         enabled = false
         glyph = ""
         label = ""
+        lockscreen_shortcut = ""
         shortcut = "3"
         variant = "default"
 
@@ -663,6 +880,7 @@ time_format = "{:%H:%M}"
         enabled = true
         glyph = ""
         label = ""
+        lockscreen_shortcut = ""
         shortcut = "2"
         variant = "default"
 
@@ -673,12 +891,22 @@ time_format = "{:%H:%M}"
         enabled = true
         glyph = ""
         label = ""
+        lockscreen_shortcut = ""
         shortcut = "3"
         variant = "destructive"
 
     [shell.shadow]
     alpha = 0.94999998807907104
     direction = "down"
+
+    [shell.window_switcher]
+    current_workspace_only = false
+    mru = true
+    show_all_outputs = true
+    show_app_icon = true
+    show_caption = true
+    show_count = true
+    style = "carousel"
 
 [storage]
 key_file = ""
@@ -722,19 +950,54 @@ swap_pct_activity_threshold = 20.0
 swap_pct_critical_threshold = 80.0
 
 [theme]
-builtin = "Noctalia"
-community_palette = "Vesper"
-custom_palette = ""
+builtin = "Nord"
+community_palette = "Shien"
+custom_palette = "Lilac"
 mode = "dark"
 pure_black_dark = false
-source = "wallpaper"
-wallpaper_scheme = "m3-rainbow"
+shell_mode = "follow"
+source = "custom"
+sync_color_scheme = true
+wallpaper_scheme = "dysfunctional"
 
     [theme.templates]
-    builtin_ids = [ "btop", "foot", "ghostty", "kcolorscheme", "kitty", "mango", "niri", "qt", "starship" ]
-    community_ids = [ "pywalfox", "zen-browser", "discord", "libreoffice", "neovim", "zed", "heroiclauncher", "prismlauncher" ]
+    builtin_ids = [ "btop", "cava", "foot", "gtk3", "gtk4", "ghostty", "kcolorscheme", "kitty", "mango", "niri", "qt", "umbriel" ]
+    community_ids = [
+        "antigravity",
+        "feishin",
+        "sonora",
+        "spicetify",
+        "spotifast",
+        "pywalfox",
+        "qutebrowser",
+        "zen-browser",
+        "cressida",
+        "discord",
+        "libreoffice",
+        "neovim",
+        "obsidian",
+        "zed",
+        "heroiclauncher",
+        "prismlauncher",
+        "strata",
+        "rio",
+        "starship",
+        "yazi"
+    ]
     enable_builtin_templates = true
     enable_community_templates = true
+
+        [theme.templates.user.palette_creator_live]
+        compare_to = ""
+        enabled = true
+        hook_async = true
+        index = 0
+        input_path = "/home/ozgur/.local/state/noctalia/plugins/materialized/community/palette-creator/templates/live-snapshot.tpl"
+        output_path = [ "/home/ozgur/.local/state/noctalia/plugin-data/kyle-palette-creator/live-snapshot.json" ]
+        output_path_dynamic = ""
+        post_action = ""
+        post_hook = ""
+        pre_hook = ""
 
 [wallpaper]
 directory = "/home/ozgur/Pictures/Wallpapers"
@@ -745,7 +1008,7 @@ enabled = true
 fill_color = ""
 fill_mode = "crop"
 per_monitor_directories = false
-transition = [ "fade", "wipe", "disc", "stripes", "zoom", "honeycomb" ]
+transition = [ "disc", "fade", "stripes", "wipe", "zoom" ]
 transition_duration = 1500.0
 transition_on_startup = false
 
@@ -753,6 +1016,7 @@ transition_on_startup = false
     enabled = false
     interval_seconds = 1800
     order = "random"
+    pause_on_fullscreen = false
     recursive = true
 
 [weather]
@@ -813,11 +1077,6 @@ min_length = 80.0
 title_scroll = "none"
 type = "active_window"
 
-[widget.bongocat]
-input_device = ""
-script = "scripts/bongocat.lua"
-type = "scripted"
-
 [widget.clock]
 format = "{:%H:%M:%S}"
 type = "clock"
@@ -849,6 +1108,7 @@ type = "clock"
 
 [widget.input_volume]
 device = "input"
+mute_color = "primary"
 show_label = false
 type = "volume"
 
@@ -873,11 +1133,17 @@ type = "lock_keys"
 
 [widget.media]
 art_size = 16.0
+capsule_radius = 0
+hide_artist = true
 hide_when_no_media = true
-max_length = 800
-min_length = 80.0
-title_scroll = "none"
+max_length = 600
+min_length = 0
+title_scroll = "on_hover"
 type = "media"
+
+    [widget.media.actions]
+    scroll_down = "media next"
+    scroll_up = "media previous"
 
 [widget.network]
 show_label = false
@@ -891,6 +1157,12 @@ type = "sysmon"
 stat = "net_tx"
 type = "sysmon"
 
+[widget.notes]
+type = "noctalia/notes:notes"
+
+[widget.notes_2]
+type = "noctalia/notes:notes"
+
 [widget.output_volume]
 device = "output"
 type = "volume"
@@ -900,10 +1172,6 @@ show_value = true
 stat = "ram_pct"
 type = "sysmon"
 visualization = "none"
-
-[widget.screen_recorder]
-script = "scripts/screen_recorder.lua"
-type = "scripted"
 
 [widget.session]
 color = "primary"
@@ -916,6 +1184,10 @@ type = "session"
 
 [widget.session_2]
 type = "session"
+
+[widget.slash]
+text = "/"
+type = "text"
 
 [widget.spacer]
 interactive = false
@@ -930,6 +1202,10 @@ visualization = "none"
 [widget.taskbar]
 color = "on_primary"
 icon_color = "primary"
+icon_scale = 1.3000000000000003
+pinned = [ "firefox", "sonora", "steam", "discord", "zed" ]
+show_all_outputs = true
+show_running = false
 type = "taskbar"
 
 [widget.temp]
@@ -947,11 +1223,12 @@ drawer = true
 type = "tray"
 
 [widget.volume]
+mute_color = "primary"
 type = "volume"
 
     [widget.volume.actions]
-    scroll_up = "volume-up:1"
     scroll_down = "volume-down:1"
+    scroll_up = "volume-up:1"
 
 [widget.weather]
 show_condition = false
